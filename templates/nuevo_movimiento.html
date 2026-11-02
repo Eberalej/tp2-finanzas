@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block titulo %}Cargar movimiento{% endblock %}
+
+{% block contenido %}
+    <h2>Cargar movimiento</h2>
+
+    {% for error in errores %}
+        <p style="color: red;">{{ error }}</p>
+    {% endfor %}
+
+    <form method="POST">
+        <label>Tipo:</label><br>
+        <select name="tipo" required>
+            <option value="">-- elegí --</option>
+            <option value="ingreso" {% if datos.get('tipo') == 'ingreso' %}selected{% endif %}>Ingreso</option>
+            <option value="gasto" {% if datos.get('tipo') == 'gasto' %}selected{% endif %}>Gasto</option>
+        </select><br><br>
+
+        <label>Descripción:</label><br>
+        <input type="text" name="descripcion" maxlength="60" required
+               value="{{ datos.get('descripcion', '') }}"><br><br>
+
+        <label>Monto (en pesos):</label><br>
+        <input type="number" name="monto" step="0.01" min="0.01" required
+               value="{{ datos.get('monto', '') }}"><br><br>
+
+        <label>Categoría:</label><br>
+        <select name="categoria" required>
+            {% for c in categorias %}
+                <option value="{{ c }}" {% if datos.get('categoria') == c %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Fecha:</label><br>
+        <input type="date" name="fecha" required value="{{ datos.get('fecha', hoy) }}"><br><br>
+
+        <button type="submit">Guardar</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block titulo %}Registro{% endblock %}
+
+{% block contenido %}
+    <h2>Crear cuenta</h2>
+
+    {% for error in errores %}
+        <p style="color: red;">{{ error }}</p>
+    {% endfor %}
+
+    <form method="POST">
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <label>Contraseña (mínimo 8 caracteres):</label><br>
+        <input type="password" name="password" minlength="8" required><br><br>
+
+        <label>Repetir contraseña:</label><br>
+        <input type="password" name="repetir" minlength="8" required><br><br>
+
+        <button type="submit">Registrarme</button>
+    </form>
+{% endblock %}

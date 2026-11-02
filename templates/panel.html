@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block titulo %}Panel{% endblock %}
+
+{% block contenido %}
+    <h2>Hola, {{ session["email"] }}</h2>
+    <h3>Resumen de {{ mes }}</h3>
+
+    <p>Ingresos del mes: $ {{ "%.2f"|format(ingresos) }}</p>
+    <p>Gastos del mes: $ {{ "%.2f"|format(gastos) }}</p>
+    <p><strong>Te queda: $ {{ "%.2f"|format(saldo) }}</strong></p>
+
+    {% if saldo > 0 %}
+        <p>Te quedan {{ dias_restantes }} días en el mes. Podés gastar hasta
+        <strong>$ {{ "%.2f"|format(por_dia) }} por día</strong>.</p>
+    {% else %}
+        <p style="color: red;">Este mes ya no te queda saldo disponible.</p>
+    {% endif %}
+
+    <h3>Cotización del dólar</h3>
+
+    {% if oficial %}
+        {% if oficial.compra %}
+            <p>Oficial: compra $ {{ "%.2f"|format(oficial.compra) }} / venta $ {{ "%.2f"|format(oficial.venta) }}</p>
+        {% else %}
+            <p>Oficial (referencia): $ {{ "%.2f"|format(oficial.venta) }}</p>
+        {% endif %}
+        <p style="color: gray;">Fuente: {{ oficial.fuente }}</p>
+        {% if saldo > 0 %}
+            <p>Tu saldo equivale a <strong>US$ {{ "%.2f"|format(saldo_usd_oficial) }}</strong> al dólar oficial.</p>
+        {% endif %}
+    {% else %}
+        <p style="color: gray;">Cotización del dólar oficial no disponible en este momento.</p>
+    {% endif %}
+
+    {% if blue %}
+        <p>Blue: compra $ {{ "%.2f"|format(blue.compra) }} / venta $ {{ "%.2f"|format(blue.venta) }}</p>
+        {% if saldo > 0 %}
+            <p>Tu saldo equivale a <strong>US$ {{ "%.2f"|format(saldo_usd_blue) }}</strong> al dólar blue.</p>
+        {% endif %}
+    {% else %}
+        <p style="color: gray;">Cotización del dólar blue no disponible en este momento.</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('nuevo_movimiento') }}">Cargar un movimiento</a></p>
+{% endblock %}
