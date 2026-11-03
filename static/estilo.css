@@ -444,6 +444,57 @@ main.angosta {
     opacity: 1;
 }
 
+
+/* ---------- Simulador de compra ---------- */
+.resultado {
+    margin-top: 28px;
+}
+
+.veredicto {
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.veredicto.si {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.veredicto.ajustado {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.veredicto.no {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.comparacion {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 8px 12px;
+    margin-top: 16px;
+    align-items: center;
+    overflow-wrap: anywhere;
+}
+
+.comparacion strong {
+    color: var(--suave);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.comparacion .negativo {
+    color: var(--rojo);
+    font-weight: 600;
+}
+
+
 /* ---------- Pantallas chicas ---------- */
 @media (max-width: 700px) {
     main {

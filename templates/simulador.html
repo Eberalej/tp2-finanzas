@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block titulo %}Simulador de compra{% endblock %}
+
+{% block clase %}caja angosta{% endblock %}
+
+{% block contenido %}
+    <h2>¿Puedo comprarlo?</h2>
+    <p class="detalle">Escribí qué querés comprar y vemos cómo te queda el mes.</p>
+
+    {% for error in errores %}
+        <p style="color: red;">{{ error }}</p>
+    {% endfor %}
+
+    <form method="POST">
+        <label>¿Qué querés comprar?</label>
+        <input type="text" name="descripcion" maxlength="60" required
+               value="{{ datos.get('descripcion', '') }}">
+
+        <label>Precio</label>
+        <input type="number" name="precio" step="0.01" min="0.01" required
+               value="{{ datos.get('precio', '') }}">
+
+        <label>Moneda</label>
+        <select name="moneda" required>
+            {% for clave, nombre in monedas.items() %}
+                <option value="{{ clave }}" {% if datos.get('moneda') == clave %}selected{% endif %}>{{ nombre }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Simular</button>
+    </form>
+
+    {% if resultado %}
+        <div class="resultado">
+            <div class="veredicto {{ resultado.veredicto }}">
+                {% if resultado.veredicto == "si" %}
+                    Podés comprarlo
+                {% elif resultado.veredicto == "ajustado" %}
+                    Te alcanza, pero queda ajustado
+                {% else %}
+                    No te alcanza este mes
+                {% endif %}
+            </div>
+
+            <p class="detalle">
+                {{ resultado.descripcion }}: <strong>$ {{ resultado.precio_pesos|miles }}</strong>
+                {% if resultado.cotizacion %}
+                    (US$ {{ resultado.precio_original|miles }} a $ {{ resultado.cotizacion|miles }})
+                {% endif %}
+            </p>
+
+            <div class="comparacion">
+                <span></span>
+                <strong>Antes</strong>
+                <strong>Después</strong>
+
+                <span>Saldo del mes</span>
+                <span>$ {{ resultado.saldo_actual|miles }}</span>
+                <span class="{{ 'negativo' if resultado.saldo_despues < 0 }}">$ {{ resultado.saldo_despues|miles }}</span>
+
+                <span>Por día</span>
+                <span>$ {{ resultado.por_dia_antes|miles }}</span>
+                <span>$ {{ resultado.por_dia_despues|miles }}</span>
+            </div>
+
+            {% if resultado.veredicto == "no" %}
+                <p class="detalle">Te faltarían <strong>$ {{ resultado.faltante|miles }}</strong> para poder comprarlo este mes.</p>
+            {% elif resultado.veredicto == "ajustado" %}
+                <p class="detalle">Esta compra usa más de la mitad del dinero que te queda. Después vas a tener que arreglarte con $ {{ resultado.por_dia_despues|miles }} por día durante {{ resultado.dias_restantes }} días.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

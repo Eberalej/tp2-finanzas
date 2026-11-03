@@ -291,5 +291,122 @@ def api_movimientos():
     return jsonify([dict(fila) for fila in filas])
 
 
+def resumen_del_mes(usuario_id):
+    hoy = date.today()
+    mes = hoy.strftime("%Y-%m")
+
+    conexion = conectar()
+    filas = conexion.execute(
+        "SELECT tipo, SUM(monto) AS total FROM movimientos "
+        "WHERE usuario_id = ? AND fecha LIKE ? GROUP BY tipo",
+        (usuario_id, mes + "%"),
+    ).fetchall()
+    conexion.close()
+
+    ingresos = 0
+    gastos = 0
+    for fila in filas:
+        if fila["tipo"] == "ingreso":
+            ingresos = fila["total"]
+        else:
+            gastos = fila["total"]
+
+    ultimo_dia = calendar.monthrange(hoy.year, hoy.month)[1]
+    dias_restantes = ultimo_dia - hoy.day + 1
+    return ingresos, gastos, dias_restantes
+
+
+MONEDAS = {
+    "pesos": "Pesos",
+    "oficial": "Dólares (cotización oficial)",
+    "blue": "Dólares (cotización blue)",
+}
+
+
+@app.route("/simulador", methods=["GET", "POST"])
+def simulador():
+    if "usuario_id" not in session:
+        return redirect(url_for("login"))
+
+    errores = []
+    datos = {}
+    resultado = None
+
+    if request.method == "POST":
+        datos = request.form
+        descripcion = request.form.get("descripcion", "").strip()
+        precio_texto = request.form.get("precio", "").replace(",", ".")
+        moneda = request.form.get("moneda", "")
+
+        if descripcion == "" or len(descripcion) > 60:
+            errores.append("Escribí qué querés comprar (hasta 60 caracteres).")
+
+        precio = 0
+        try:
+            precio = float(precio_texto)
+            if not math.isfinite(precio) or precio <= 0 or precio > 1e12:
+                errores.append("El precio tiene que ser mayor a cero.")
+        except ValueError:
+            errores.append("El precio tiene que ser un número.")
+
+        if moneda not in MONEDAS:
+            errores.append("Elegí una moneda de la lista.")
+
+        precio_pesos = precio
+        cotizacion = None
+        if not errores and moneda != "pesos":
+            if moneda == "oficial":
+                dolar = obtener_oficial()
+            else:
+                dolar = obtener_dolar("blue")
+
+            if dolar is None:
+                errores.append(
+                    "No pudimos obtener la cotización del dólar en este momento. "
+                    "Probá más tarde o ingresá el precio en pesos."
+                )
+            else:
+                cotizacion = dolar["venta"]
+                precio_pesos = precio * cotizacion
+
+        if not errores:
+            ingresos, gastos, dias_restantes = resumen_del_mes(session["usuario_id"])
+            saldo_actual = ingresos - gastos
+            saldo_despues = saldo_actual - precio_pesos
+
+            por_dia_antes = saldo_actual / dias_restantes if saldo_actual > 0 else 0
+            por_dia_despues = saldo_despues / dias_restantes if saldo_despues > 0 else 0
+
+            LIMITE_AJUSTADO = 0.5
+            if saldo_despues < 0:
+                veredicto = "no"
+            elif precio_pesos > saldo_actual * LIMITE_AJUSTADO:
+                veredicto = "ajustado"
+            else:
+                veredicto = "si"
+
+            resultado = {
+                "descripcion": descripcion,
+                "precio_original": precio,
+                "precio_pesos": precio_pesos,
+                "cotizacion": cotizacion,
+                "saldo_actual": saldo_actual,
+                "saldo_despues": saldo_despues,
+                "por_dia_antes": por_dia_antes,
+                "por_dia_despues": por_dia_despues,
+                "dias_restantes": dias_restantes,
+                "faltante": -saldo_despues if saldo_despues < 0 else 0,
+                "veredicto": veredicto,
+            }
+
+    return render_template(
+        "simulador.html",
+        errores=errores,
+        datos=datos,
+        monedas=MONEDAS,
+        resultado=resultado,
+    )
+
+
 if __name__ == "__main__":
     app.run(debug=True)

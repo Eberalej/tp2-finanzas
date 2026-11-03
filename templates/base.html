@@ -18,6 +18,7 @@
                     <a href="{{ url_for('panel') }}" class="{{ 'activo' if ep == 'panel' }}">Panel</a>
                     <a href="{{ url_for('movimientos') }}" class="{{ 'activo' if ep == 'movimientos' }}">Movimientos</a>
                     <a href="{{ url_for('nuevo_movimiento') }}" class="{{ 'activo' if ep == 'nuevo_movimiento' }}">Cargar movimiento</a>
+                    <a href="{{ url_for('simulador') }}" class="{{ 'activo' if ep == 'simulador' }}">Simulador</a>
                     <a href="{{ url_for('logout') }}">Cerrar sesión</a>
                 {% else %}
                     <a href="{{ url_for('login') }}" class="{{ 'activo' if ep == 'login' }}">Iniciar sesión</a>
