@@ -48,7 +48,7 @@
         {% if ingresos > 0 %}
             <p class="detalle">Gastaste el {{ "%.0f"|format(pct) }}% de lo que ingresó este mes.</p>
             <div class="barra-fondo">
-                <div class="barra-relleno {{ 'pasado' if pct > 100 }}" style="width: {{ pct_barra }}%"></div>
+                <div class="barra-relleno {{ 'pasado' if pct > 100 }}" style="width: {{ pct_barra }} %"></div>
             </div>
         {% else %}
             <p class="detalle">Todavía no cargaste ingresos este mes.</p>
