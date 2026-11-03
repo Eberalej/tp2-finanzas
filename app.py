@@ -17,6 +17,11 @@ app.secret_key = os.getenv("SECRET_KEY")
 crear_tablas()
 CATEGORIAS = ["Sueldo", "Alimentos", "Transporte", "Vivienda", "Servicios", "Salud", "Ocio", "Otros"]
 
+@app.template_filter("miles")
+def miles(valor, decimales=2):
+    texto = f"{valor:,.{decimales}f}"
+    return texto.replace(",", "X").replace(".", ",").replace("X", ".")
+
 @app.route("/")
 def inicio():
     if "usuario_id" in session:

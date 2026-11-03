@@ -4,30 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block titulo %}Mis finanzas{% endblock %}</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
 </head>
-<body>
-    <header>
-        <h1>Mis finanzas</h1>
-        <nav>
-            {% if session.get("usuario_id") %}
-            <a href="{{ url_for('panel') }}">Panel</a>
-            <a href="{{ url_for('movimientos') }}">Movimientos</a>
-            <a href="{{ url_for('nuevo_movimiento') }}">Cargar movimiento</a>
-            <a href="{{ url_for('logout') }}">Cerrar sesión</a>
-            {% else %}
-            <a href="{{ url_for('login') }}">Iniciar sesión</a>
-            <a href="{{ url_for('registro') }}">Registrarme</a>
-            {% endif %}
-        </nav>
 
+<body>
+    {% set ep = request.endpoint %}
+    <header>
+        <div class="barra-nav">
+            <h1>Mis <span>finanzas</span></h1>
+            <nav>
+                {% if session.get("usuario_id") %}
+                    <a href="{{ url_for('panel') }}" class="{{ 'activo' if ep == 'panel' }}">Panel</a>
+                    <a href="{{ url_for('movimientos') }}" class="{{ 'activo' if ep == 'movimientos' }}">Movimientos</a>
+                    <a href="{{ url_for('nuevo_movimiento') }}" class="{{ 'activo' if ep == 'nuevo_movimiento' }}">Cargar movimiento</a>
+                    <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="{{ 'activo' if ep == 'login' }}">Iniciar sesión</a>
+                    <a href="{{ url_for('registro') }}" class="{{ 'activo' if ep == 'registro' }}">Registrarme</a>
+                {% endif %}
+            </nav>
+        </div>
     </header>
 
-    <main>
+    <main class="{% block clase %}caja{% endblock %}">
         {% for mensaje in get_flashed_messages() %}
-            <p><strong>{{ mensaje }}</strong></p>
+            <p class="aviso">{{ mensaje }}</p>
         {% endfor %}
 
         {% block contenido %}{% endblock %}
     </main>
+
+    <script>
+        document.querySelectorAll(".campo-clave").forEach(function (campo) {
+            const input = campo.querySelector("input");
+            const boton = campo.querySelector(".ojo");
+
+            boton.addEventListener("click", function () {
+                const estaOculta = input.type === "password";
+                input.type = estaOculta ? "text" : "password";
+                boton.classList.toggle("activo", estaOculta);
+                boton.setAttribute("aria-label", estaOculta ? "Ocultar contraseña" : "Mostrar contraseña");
+            });
+        });
+    </script>
+
 </body>
 </html>

@@ -1,46 +1,98 @@
+
 {% extends "base.html" %}
 
 {% block titulo %}Panel{% endblock %}
 
+{% block clase %}{% endblock %}
+
 {% block contenido %}
-    <h2>Hola, {{ session["email"] }}</h2>
-    <h3>Resumen de {{ mes }}</h3>
+    {% set pct = (gastos / ingresos * 100) if ingresos > 0 else 0 %}
+    {% set pct_barra = [pct, 100]|min %}
 
-    <p>Ingresos del mes: $ {{ "%.2f"|format(ingresos) }}</p>
-    <p>Gastos del mes: $ {{ "%.2f"|format(gastos) }}</p>
-    <p><strong>Te queda: $ {{ "%.2f"|format(saldo) }}</strong></p>
+    <div class="saludo">
+        <p class="sub">Resumen de {{ mes }}</p>
+        <h2>Hola, {{ session["email"] }}</h2>
+    </div>
 
-    {% if saldo > 0 %}
-        <p>Te quedan {{ dias_restantes }} días en el mes. Podés gastar hasta
-        <strong>$ {{ "%.2f"|format(por_dia) }} por día</strong>.</p>
-    {% else %}
-        <p style="color: red;">Este mes ya no te queda saldo disponible.</p>
-    {% endif %}
+    <section class="hero {{ 'alerta' if saldo <= 0 }}">
+        <div>
+            <span class="hero-etiqueta">Te queda este mes</span>
+            <strong class="hero-monto">$ {{ saldo|miles }}</strong>
+        </div>
+        <div class="hero-lado">
+            {% if saldo > 0 %}
+                <span class="hero-etiqueta">Podés gastar por día</span>
+                <strong class="hero-dia">$ {{ por_dia|miles }}</strong>
+                <span class="hero-nota">durante {{ dias_restantes }} días</span>
+            {% else %}
+                <span class="hero-etiqueta">Atención</span>
+                <strong class="hero-dia">Sin saldo disponible</strong>
+                <span class="hero-nota">Ya gastaste todo lo que ingresó este mes</span>
+            {% endif %}
+        </div>
+    </section>
 
-    <h3>Cotización del dólar</h3>
+    <div class="tarjetas">
+        <div class="tarjeta">
+            <span class="tarjeta-titulo">Ingresos del mes</span>
+            <strong class="monto verde">$ {{ ingresos|miles }}</strong>
+        </div>
+        <div class="tarjeta">
+            <span class="tarjeta-titulo">Gastos del mes</span>
+            <strong class="monto rojo">$ {{ gastos|miles }}</strong>
+        </div>
+    </div>
 
-    {% if oficial %}
-        {% if oficial.compra %}
-            <p>Oficial: compra $ {{ "%.2f"|format(oficial.compra) }} / venta $ {{ "%.2f"|format(oficial.venta) }}</p>
+    <div class="tarjeta ancha">
+        <span class="tarjeta-titulo">Uso de tus ingresos</span>
+        {% if ingresos > 0 %}
+            <p class="detalle">Gastaste el {{ "%.0f"|format(pct) }}% de lo que ingresó este mes.</p>
+            <div class="barra-fondo">
+                <div class="barra-relleno {{ 'pasado' if pct > 100 }}" style="width: {{ pct_barra }}%"></div>
+            </div>
         {% else %}
-            <p>Oficial (referencia): $ {{ "%.2f"|format(oficial.venta) }}</p>
+            <p class="detalle">Todavía no cargaste ingresos este mes.</p>
         {% endif %}
-        <p style="color: gray;">Fuente: {{ oficial.fuente }}</p>
-        {% if saldo > 0 %}
-            <p>Tu saldo equivale a <strong>US$ {{ "%.2f"|format(saldo_usd_oficial) }}</strong> al dólar oficial.</p>
-        {% endif %}
-    {% else %}
-        <p style="color: gray;">Cotización del dólar oficial no disponible en este momento.</p>
-    {% endif %}
+    </div>
 
-    {% if blue %}
-        <p>Blue: compra $ {{ "%.2f"|format(blue.compra) }} / venta $ {{ "%.2f"|format(blue.venta) }}</p>
-        {% if saldo > 0 %}
-            <p>Tu saldo equivale a <strong>US$ {{ "%.2f"|format(saldo_usd_blue) }}</strong> al dólar blue.</p>
-        {% endif %}
-    {% else %}
-        <p style="color: gray;">Cotización del dólar blue no disponible en este momento.</p>
-    {% endif %}
+    <h3 class="seccion">Cotización del dólar</h3>
+    <div class="tarjetas">
+        <div class="tarjeta">
+            <span class="tarjeta-titulo">Dólar oficial</span>
+            {% if oficial %}
+                {% if oficial.compra %}
+                    <strong class="monto">$ {{ oficial.venta|miles }}</strong>
+                    <p class="detalle">Compra $ {{ oficial.compra|miles }} · Venta $ {{ oficial.venta|miles }}</p>
+                {% else %}
+                    <strong class="monto">$ {{ oficial.venta|miles }}</strong>
+                    <p class="detalle">Valor de referencia</p>
+                {% endif %}
+                <p class="detalle">Fuente: {{ oficial.fuente }}</p>
+                {% if saldo > 0 %}
+                    <p class="detalle">Tu saldo equivale a <strong>US$ {{ saldo_usd_oficial|miles }}</strong></p>
+                {% endif %}
+            {% else %}
+                <p class="detalle">No disponible en este momento.</p>
+            {% endif %}
+        </div>
 
-    <p><a href="{{ url_for('nuevo_movimiento') }}">Cargar un movimiento</a></p>
+        <div class="tarjeta">
+            <span class="tarjeta-titulo">Dólar blue</span>
+            {% if blue %}
+                <strong class="monto">$ {{ blue.venta|miles }}</strong>
+                <p class="detalle">Compra $ {{ blue.compra|miles }} · Venta $ {{ blue.venta|miles }}</p>
+                <p class="detalle">Fuente: {{ blue.fuente }}</p>
+                {% if saldo > 0 %}
+                    <p class="detalle">Tu saldo equivale a <strong>US$ {{ saldo_usd_blue|miles }}</strong></p>
+                {% endif %}
+            {% else %}
+                <p class="detalle">No disponible en este momento.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="acciones">
+        <a class="boton" href="{{ url_for('nuevo_movimiento') }}">Cargar movimiento</a>
+        <a class="boton secundario" href="{{ url_for('movimientos') }}">Ver mis movimientos</a>
+    </div>
 {% endblock %}

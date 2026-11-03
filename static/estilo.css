@@ -1,0 +1,513 @@
+:root {
+    --fondo: #f1f5f9;
+    --superficie: #ffffff;
+    --texto: #0f172a;
+    --suave: #64748b;
+    --borde: #e2e8f0;
+    --primario: #0f766e;
+    --primario-oscuro: #115e59;
+    --encabezado: #0f172a;
+    --verde: #059669;
+    --rojo: #dc2626;
+    --sombra: 0 1px 3px rgba(15, 23, 42, 0.08), 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+    line-height: 1.5;
+}
+
+a {
+    color: var(--primario);
+}
+
+/* ---------- Encabezado ---------- */
+header {
+    background: var(--encabezado);
+}
+
+.barra-nav {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.35rem;
+    color: white;
+    letter-spacing: 0.02em;
+}
+
+header h1 span {
+    color: #2dd4bf;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+nav a {
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+nav a.activo {
+    background: rgba(45, 212, 191, 0.18);
+    color: #5eead4;
+}
+
+/* ---------- Contenido ---------- */
+main {
+    max-width: 1000px;
+    margin: 28px auto;
+    padding: 0 20px;
+}
+
+main.caja {
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: var(--sombra);
+}
+
+h2 {
+    margin-top: 0;
+    color: var(--texto);
+    text-align: center;
+}
+
+.aviso {
+    background: #ecfdf5;
+    border-left: 4px solid var(--verde);
+    padding: 10px 14px;
+    border-radius: 6px;
+    color: #065f46;
+}
+
+.seccion {
+    margin: 32px 0 12px;
+    font-size: 1.1rem;
+    color: var(--texto);
+}
+
+/* ---------- Formularios ---------- */
+.caja > form {
+    max-width: 440px;
+}
+
+form br {
+    display: none;
+}
+
+form label {
+    display: block;
+    margin-top: 16px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 5px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+}
+
+input:focus,
+select:focus {
+    outline: 3px solid rgba(15, 118, 110, 0.25);
+    border-color: var(--primario);
+}
+
+/* ---------- Botones ---------- */
+button,
+.boton {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 11px 22px;
+    background: var(--primario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button:hover,
+.boton:hover {
+    background: var(--primario-oscuro);
+}
+
+.boton.secundario {
+    background: transparent;
+    color: var(--primario);
+    border: 1px solid var(--primario);
+}
+
+.boton.secundario:hover {
+    background: #f0fdfa;
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.acciones .boton {
+    margin-top: 0;
+}
+
+/* ---------- Panel: tarjeta principal ---------- */
+.saludo {
+    margin-bottom: 18px;
+}
+
+.saludo h2 {
+    margin-bottom: 0;
+    font-size: 1.6rem;
+}
+
+.saludo .sub {
+    margin: 0;
+    color: var(--suave);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+    padding: 32px;
+    border-radius: 18px;
+    color: white;
+    background: linear-gradient(135deg, #0f172a 0%, #115e59 100%);
+    box-shadow: var(--sombra);
+}
+
+.hero.alerta {
+    background: linear-gradient(135deg, #450a0a 0%, #b91c1c 100%);
+}
+
+.hero-etiqueta {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.75;
+}
+
+.hero-monto {
+    display: block;
+    margin-top: 6px;
+    font-size: clamp(2.2rem, 7vw, 3.4rem);
+    line-height: 1.1;
+}
+
+.hero-lado {
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    padding-left: 24px;
+}
+
+.hero-dia {
+    display: block;
+    margin-top: 6px;
+    font-size: clamp(1.7rem, 5vw, 2.3rem);
+    color: #5eead4;
+}
+
+.hero-nota {
+    opacity: 0.75;
+    font-size: 0.9rem;
+}
+
+/* ---------- Panel: tarjetas ---------- */
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.tarjeta {
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: var(--sombra);
+}
+
+.tarjeta-titulo {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--suave);
+}
+
+.monto {
+    display: block;
+    margin-top: 6px;
+    font-size: 1.7rem;
+}
+
+.verde {
+    color: var(--verde);
+}
+
+.rojo {
+    color: var(--rojo);
+}
+
+.detalle {
+    margin: 6px 0 0;
+    color: var(--suave);
+    font-size: 0.9rem;
+}
+
+.tarjeta.ancha {
+    margin-top: 16px;
+}
+
+.barra-fondo {
+    height: 12px;
+    margin-top: 12px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.barra-relleno {
+    height: 100%;
+    background: var(--primario);
+    border-radius: 999px;
+}
+
+.barra-relleno.pasado {
+    background: var(--rojo);
+}
+
+/* ---------- Tabla de movimientos ---------- */
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--suave);
+    border-bottom: 2px solid var(--borde);
+}
+
+.tabla td {
+    padding: 12px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.tabla tbody tr:hover td {
+    background: #f8fafc;
+}
+
+.tabla form {
+    margin: 0;
+}
+
+.monto-gasto,
+.monto-ingreso {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.monto-gasto {
+    color: var(--rojo);
+}
+
+.monto-ingreso {
+    color: var(--verde);
+}
+
+.etiqueta {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.etiqueta.ingreso {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.etiqueta.gasto {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.borrar {
+    margin: 0;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    background: transparent;
+    color: var(--rojo);
+    border: 1px solid #fecaca;
+}
+
+.borrar:hover {
+    background: #fef2f2;
+}
+
+main.angosta {
+    max-width: 500px;
+}
+
+.angosta > form {
+    max-width: none;
+}
+
+
+/* ---------- Ojo para mostrar la contraseña ---------- */
+.campo-clave {
+    position: relative;
+}
+
+.campo-clave input {
+    padding-right: 46px;
+}
+
+.campo-clave .ojo {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    height: calc(100% - 5px);
+    margin: 0;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    color: var(--suave);
+    border: none;
+    border-radius: 0 8px 8px 0;
+}
+
+.campo-clave .ojo:hover {
+    background: transparent;
+    color: var(--primario);
+}
+
+.campo-clave .tachado {
+    opacity: 0;
+}
+
+.campo-clave .ojo.activo .tachado {
+    opacity: 1;
+}
+
+/* ---------- Pantallas chicas ---------- */
+@media (max-width: 700px) {
+    main {
+        margin: 16px auto;
+        padding: 0 12px;
+    }
+
+    main.caja {
+        padding: 18px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 22px;
+    }
+
+    .hero-lado {
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 16px 0 0;
+    }
+
+    /* La tabla pasa a ser una tarjeta por movimiento */
+    .tabla thead {
+        display: none;
+    }
+
+    .tabla,
+    .tabla tbody,
+    .tabla tr,
+    .tabla td {
+        display: block;
+        width: 100%;
+    }
+
+    .tabla tr {
+        margin-bottom: 12px;
+        padding: 6px 4px;
+        border: 1px solid var(--borde);
+        border-radius: 12px;
+        background: white;
+    }
+
+    .tabla td {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 6px 12px;
+        border: none;
+        text-align: right;
+    }
+
+    .tabla td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--suave);
+        text-align: left;
+    }
+
+    .tabla td:last-child {
+        justify-content: flex-end;
+    }
+
+    .tabla tbody tr:hover td {
+        background: transparent;
+    }
+}

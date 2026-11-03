@@ -2,23 +2,45 @@
 
 {% block titulo %}Registro{% endblock %}
 
+{% block clase %}caja angosta{% endblock %}
+
 {% block contenido %}
-    <h2>Crear cuenta</h2>
+<h2>Crear cuenta</h2>
 
-    {% for error in errores %}
-        <p style="color: red;">{{ error }}</p>
-    {% endfor %}
+{% for error in errores %}
+<p style="color: red;">{{ error }}</p>
+{% endfor %}
 
-    <form method="POST">
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br><br>
+<form method="POST">
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
 
-        <label>Contraseña (mínimo 8 caracteres):</label><br>
-        <input type="password" name="password" minlength="8" required><br><br>
+    <label>Contraseña (mínimo 8 caracteres):</label><br>
+    <div class="campo-clave">
+        <input type="password" name="password" minlength="8" required>
+        <button type="button" class="ojo" aria-label="Mostrar contraseña">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+                <circle cx="12" cy="12" r="3" />
+                <line class="tachado" x1="3" y1="21" x2="21" y2="3" />
+            </svg>
+        </button>
+    </div>
 
-        <label>Repetir contraseña:</label><br>
-        <input type="password" name="repetir" minlength="8" required><br><br>
+    <label>Repetir contraseña:</label><br>
+    <div class="campo-clave">
+        <input type="password" name="repetir" minlength="8" required>
+        <button type="button" class="ojo" aria-label="Mostrar contraseña">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" />
+                <circle cx="12" cy="12" r="3" />
+                <line class="tachado" x1="3" y1="21" x2="21" y2="3" />
+            </svg>
+        </button>
+    </div>
 
-        <button type="submit">Registrarme</button>
-    </form>
+    <button type="submit">Registrarme</button>
+</form>
 {% endblock %}
