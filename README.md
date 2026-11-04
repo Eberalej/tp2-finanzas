@@ -7,7 +7,7 @@ Trabajo práctico grupal de las Unidades 3 y 4 (resuelto de forma individual).
 ## Direcciones publicadas
 
 - Aplicación: https://eber.pythonanywhere.com
-- Tablero: [https://tp2-finanzas.streamlit.app/ ]
+- Tablero: [https://tp2-finanzas-tablero.onrender.com/ ]
 - Repositorio: https://github.com/Eberalej/tp2-finanzas
 
 ## Qué hace
@@ -96,6 +96,19 @@ Requieren haber iniciado sesión. Sin sesión responden con el código 401.
 
 Las dos APIs de cotización que se usan (DolarAPI y BCRA) son públicas y no necesitan clave.
 
+
 ## Publicación
 
-La aplicación está en PythonAnywhere y el tablero en Streamlit Community Cloud. En la nube, la dirección de la aplicación se carga en los *Secrets* del tablero y la clave de la sesión en el `.env` del servidor.
+La aplicación Flask está en PythonAnywhere y el tablero de Streamlit en Render (plan gratuito).
+
+- La clave de la sesión de Flask (`SECRET_KEY`) está en el `.env` del servidor de PythonAnywhere.
+- La dirección de la aplicación se carga en el tablero como variable de entorno `URL_FLASK`, desde el panel de Render.
+- Ningún secreto está en el repositorio.
+
+Configuración del tablero en Render:
+
+- Build Command: `pip install -r tablero/requirements.txt`
+- Start Command: `python -m streamlit run tablero/dashboard.py --server.port $PORT --server.address 0.0.0.0 --server.headless true`
+- Variable de entorno: `URL_FLASK` con la dirección de la aplicación
+
+Nota: en el plan gratuito de Render, el tablero se apaga tras un rato sin visitas y la primera vez puede tardar alrededor de un minuto en abrir.
