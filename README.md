@@ -107,8 +107,8 @@ La aplicación Flask está en PythonAnywhere y el tablero de Streamlit en Render
 
 Configuración del tablero en Render:
 
-- Build Command: `pip install -r tablero/requirements.txt`
-- Start Command: `python -m streamlit run tablero/dashboard.py --server.port $PORT --server.address 0.0.0.0 --server.headless true`
+- Build Command: `pip install -r requirements.txt`
+- Start Command: `python -m streamlit run dashboard.py --server.port $PORT --server.address 0.0.0.0 --server.headless true` 
 - Variable de entorno: `URL_FLASK` con la dirección de la aplicación
 
 Nota: en el plan gratuito de Render, el tablero se apaga tras un rato sin visitas y la primera vez puede tardar alrededor de un minuto en abrir.
