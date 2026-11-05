@@ -315,6 +315,7 @@ button:hover,
 }
 
 .barra-relleno {
+    width: var(--ancho, 0%);
     height: 100%;
     background: var(--primario);
     border-radius: 999px;

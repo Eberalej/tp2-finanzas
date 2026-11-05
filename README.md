@@ -114,3 +114,10 @@ Configuración del tablero en Render:
 - Variable de entorno: `URL_FLASK` con la dirección de la aplicación
 
 Nota: en el plan gratuito de Render, el tablero se apaga tras un rato sin visitas y la primera vez puede tardar alrededor de un minuto en abrir.
+
+## Creación de Usuario de Prueba
+
+Se creó un usuario y contraseña con datos cargados para que su análisis sea mas práctico y rápido. Se puede modificar su contenido a gusto, además crear un nuevo usuario.
+
+User: `pweb@ugr.com`
+Pass: `12345abc`
