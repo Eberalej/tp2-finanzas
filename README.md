@@ -76,7 +76,9 @@ pip install -r tablero/requirements.txt
 streamlit run tablero/dashboard.py
 ```
 
-El tablero toma la dirección de la aplicación de la variable `URL_FLASK` del `.env` y se inicia sesión con una cuenta creada en esa aplicación.
+Por defecto, el tablero se conecta a la aplicación publicada (https://eber.pythonanywhere.com), así que no hace falta configurar nada: se registra una cuenta en esa página y se inicia sesión en el tablero con las mismas credenciales.
+
+Para usar una aplicación Flask propia, ejecutada en la misma computadora, se define en el `.env` la línea `URL_FLASK=http://127.0.0.1:5000` con python app.py encendido.
 
 ## Puntos de acceso JSON
 
@@ -92,7 +94,7 @@ Requieren haber iniciado sesión. Sin sesión responden con el código 401.
 | Variable | Para qué sirve |
 |---|---|
 | `SECRET_KEY` | Firma la sesión de Flask. Va en el `.env`, que no se sube ni se entrega. |
-| `URL_FLASK` | Dirección de la aplicación a la que se conecta el tablero. |
+| `URL_FLASK` | Opcional. Dirección de la aplicación a la que se conecta el tablero. Si no se define, usa la aplicación publicada. |
 
 Las dos APIs de cotización que se usan (DolarAPI y BCRA) son públicas y no necesitan clave.
 

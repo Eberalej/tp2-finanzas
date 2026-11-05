@@ -9,13 +9,25 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+#def leer_url_flask():
+    #url = os.getenv("URL_FLASK")
+    #if not url:
+        #try:
+            #url = st.secrets["URL_FLASK"]
+        #except Exception:
+            #url = "http://127.0.0.1:5000"
+    #return url.rstrip("/")
+
+
+URL_PUBLICADA = "https://eber.pythonanywhere.com"
+
 def leer_url_flask():
     url = os.getenv("URL_FLASK")
     if not url:
         try:
             url = st.secrets["URL_FLASK"]
         except Exception:
-            url = "http://127.0.0.1:5000"
+            url = URL_PUBLICADA
     return url.rstrip("/")
 
 
