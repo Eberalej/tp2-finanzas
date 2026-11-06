@@ -236,7 +236,7 @@ else:
     )
 
 st.markdown(
-    f'<div class="{clase_hero}">'
+    f'<div class="{clase_hero}" translate="no">'
     "<div>"
     f'<span class="tb-etiqueta">{etiqueta_hero}</span>'
     f'<span class="tb-grande">{pesos(saldo)}</span>'
@@ -263,7 +263,7 @@ else:
     top_detalle = "Sin gastos este mes"
 
 st.markdown(
-    '<div class="tb-tarjetas">'
+    '<div class="tb-tarjetas" translate="no">'
     + tarjeta("Ingresos del mes", pesos(ingresos), "tb-verde")
     + tarjeta("Gastos del mes", pesos(gastos), "tb-rojo")
     + tarjeta("Movimientos del mes", str(len(df_mes)))
@@ -284,7 +284,7 @@ else:
     uso = '<span class="tb-detalle">Todavía no hay ingresos en este mes.</span>'
 
 st.markdown(
-    '<div class="tb-tarjetas">'
+    '<div class="tb-tarjetas" translate="no">'
     '<div class="tb-tarjeta" style="grid-column: 1 / -1;">'
     '<span class="tb-etiqueta">Uso de tus ingresos</span>'
     f"{uso}"
