@@ -7,7 +7,7 @@ Trabajo práctico grupal de las Unidades 3 y 4 (resuelto de forma individual).
 ## Direcciones publicadas
 
 - Aplicación: https://eber.pythonanywhere.com
-- Tablero: [https://tp2-finanzas-tablero.onrender.com/ ]
+- Tablero: https://tp2-finanzas-tablero.onrender.com
 - Repositorio: https://github.com/Eberalej/tp2-finanzas
 
 ## Qué hace
@@ -16,11 +16,11 @@ Trabajo práctico grupal de las Unidades 3 y 4 (resuelto de forma individual).
 - Carga de ingresos y gastos, con validación en el navegador y en el servidor.
 - Panel con el saldo del mes, el gasto diario disponible y las cotizaciones del dólar oficial y blue.
 - Simulador de compra: calcula cómo quedaría el mes si se hiciera una compra, en pesos o en dólares.
-- Tablero con Streamlit y Pandas: gastos por categoría, ingresos y gastos por mes y tabla de movimientos.
+- Tablero con Streamlit y Pandas: Gastos por categoría, ingresos y gastos por mes y tabla de movimientos. Filtros por mes y categoría y descarga en CSV.
 
 ## Tecnologías
 
-- Python, Flask y plantillas Jinja2
+- Python 3.14.3, Flask y plantillas Jinja2
 - SQLite
 - `requests`, para consultar DolarAPI y la API del BCRA (con tiempo máximo de espera y respaldo si un servicio falla)
 - Streamlit y Pandas
@@ -115,9 +115,15 @@ Configuración del tablero en Render:
 
 Nota: en el plan gratuito de Render, el tablero se apaga tras un rato sin visitas y la primera vez puede tardar alrededor de un minuto en abrir.
 
+## Traducción de tablero en celulares 
+
+Se recomienda no traducir el tablero si se abre con celulares, ya que esto podría provocar errores menores en algunas palabras que el traductor no interpreta correctamente.
+
 ## Creación de Usuario de Prueba
 
 Se creó un usuario y contraseña con datos cargados para que su análisis sea mas práctico y rápido. Se puede modificar su contenido a gusto, además crear un nuevo usuario.
 
 User: `pweb@ugr.com`
 Pass: `12345abc`
+
+ACLARACIÓN: sirve para la aplicación y para el tablero. Y como está en un repositorio público con una contraseña simple, al crear un nuevo usuario se recomienda que no contenga nada personal ni se use en otro lado.
